@@ -1,2 +1,2 @@
 # Password-Manager
-This is a program which will store and manage user passwords
+- This is a Java program which will store and manage user passwords
