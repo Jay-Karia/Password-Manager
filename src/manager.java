@@ -39,9 +39,9 @@ public class manager {
             Scanner pass = new Scanner(System.in);
             String password = pass.nextLine();
             boolean valid;
+            println("Confirm your Password");
             do {
                 valid = true;
-                println("Confirm your Password");
                 Scanner newPass = new Scanner(System.in);
                 String newPassword = newPass.nextLine();
 
@@ -49,10 +49,10 @@ public class manager {
                     println("Password is Set!");
                     println("\nEnter the Security Key for your Password");
                     Scanner security = new Scanner(System.in);
-                    String key = security.nextLine() + ".txt";
-                  /*Setting a Password*/
+                    String key = security.nextLine();
+                    /*Setting a Password*/
                     try {
-                        File file = new File(cDir+key);
+                        File file = new File(cDir+key + ".txt");
                         Writer writer = new FileWriter(file);
 
                         writer.write("Name: " + n);
