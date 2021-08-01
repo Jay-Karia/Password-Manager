@@ -15,7 +15,7 @@ public class manager {
             Scanner name = new Scanner(System.in);
             String n = name.nextLine();
 
-            println("\nEnter the purpose for your Password (ex: Email)");
+            println("\nEnter your Message");
             Scanner purpose = new Scanner(System.in);
             String p = purpose.nextLine();
 
@@ -40,6 +40,25 @@ public class manager {
                     valid = false;
                 }
             } while (!valid);
+        } else if (sel.equals("2")) {
+            println("\nSelected: 2) Retrieve Your Password");
+            println("\nEnter the Security Key to retrieve your password");
+            Scanner sec = new Scanner(System.in);
+            String newSec = sec.nextLine();
+            getPass(newSec);
+        }
+    }
+
+    private static void getPass(String key) {
+        try {
+            File f = new File("s");
+            Reader reader = new FileReader(f);
+            System.out.println(reader.read());
+
+            reader.close();
+
+        } catch (IOException i) {
+            println("Could not get your Password!! Sorry");
         }
     }
 
@@ -50,16 +69,15 @@ public class manager {
     public static void setPassword(String securityKey, String name, String password, String purpose) {
 
         try {
-            File file = new File("User Passwords\\" + securityKey + ".txt");
+            File file = new File(securityKey);
             Writer writer = new FileWriter(file);
 
             writer.write("Name: " + name);
-            writer.write("Password: " + password);
-            writer.write("Purpose for storing the password: " + purpose);
-            writer.write("Security Key: " +  securityKey);
-            if (file.createNewFile()) {
-                println("Your Password is Successfully Saved!");
-            }
+            writer.write("\nPassword: " + password);
+            writer.write("\nMessage: " + purpose);
+            writer.write("\nSecurity Key: " +  securityKey);
+            println("\nYour Password is Successfully Saved!");
+
 
             writer.flush();
             writer.close();
