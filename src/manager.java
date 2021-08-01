@@ -2,8 +2,24 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.io.*;
 public class manager {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         println("Welcome to Java Password Manager Developed -- By Jay (v-1.0)");
+
+        println("\n1) Set your Custom Directory where your password will be saved\n2) Keep it Default");
+        String cDir = null;
+        Scanner Sel = new Scanner(System.in);
+        String s = Sel.next();
+        if (s.equals("1")) {
+            println("Selected: 1) Custom Directory");
+            Scanner custom = new Scanner(System.in);
+            cDir = custom.nextLine();
+            System.out.println("You Directory is set to: " + cDir);
+        } else if (s.equals("2")) {
+            println("\nSelected: 2) Default Directory");
+            cDir = new java.io.File(".").getCanonicalPath();
+            System.out.println("Default Directory is set: " + cDir);
+        }
+
         println("\nWhat do you want to Do?\n1) Enter a New Password\n2) Retrieve Your Password");
         String sel;
         Scanner selection = new Scanner(System.in);
@@ -16,8 +32,8 @@ public class manager {
             String n = name.nextLine();
 
             println("\nEnter your Message");
-            Scanner purpose = new Scanner(System.in);
-            String p = purpose.nextLine();
+            Scanner mess = new Scanner(System.in);
+            String message = mess.nextLine();
 
             println("\nYour Password");
             Scanner pass = new Scanner(System.in);
@@ -34,7 +50,23 @@ public class manager {
                     println("\nEnter the Security Key for your Password");
                     Scanner security = new Scanner(System.in);
                     String key = security.nextLine() + ".txt";
-                    setPassword(key, n, password, p);
+                  /*Setting a Password*/
+                    try {
+                        File file = new File(cDir+key);
+                        Writer writer = new FileWriter(file);
+
+                        writer.write("Name: " + n);
+                        writer.write("\nPassword: " + password);
+                        writer.write("\nMessage: " + message);
+                        writer.write("\nSecurity Key: " +  key);
+                        println("\nYour Password is Successfully Saved!");
+
+
+                        writer.flush();
+                        writer.close();
+                    } catch (IOException ex) {
+                        println("\nAn Error occurred while storing your Password! Sorry");
+                    }
                 } else {
                     println("Your password doesn't match! Try again");
                     valid = false;
@@ -45,46 +77,21 @@ public class manager {
             println("\nEnter the Security Key to retrieve your password");
             Scanner sec = new Scanner(System.in);
             String newSec = sec.nextLine();
-            getPass(newSec);
-        }
-    }
+            try {
+                File f = new File(cDir + newSec + ".txt");
+                BufferedReader br = new BufferedReader(new FileReader(f));
+                String str;
+                while ((str = br.readLine()) != null) {
+                    System.out.println(str);
+                }
 
-    private static void getPass(String key) {
-        try {
-            File f = new File(key + ".txt");
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            String str;
-            while ((str = br.readLine()) != null) {
-                System.out.println(str);
+            } catch (Exception i) {
+                println("Could not get your Password!! Sorry");
             }
-
-        } catch (Exception i) {
-            println("Could not get your Password!! Sorry");
         }
     }
 
     public static void println(String str) {
         System.out.println(str);
-    }
-
-    public static void setPassword(String securityKey, String name, String password, String purpose) {
-
-        try {
-            File file = new File(securityKey);
-            Writer writer = new FileWriter(file);
-
-            writer.write("Name: " + name);
-            writer.write("\nPassword: " + password);
-            writer.write("\nMessage: " + purpose);
-            writer.write("\nSecurity Key: " +  securityKey);
-            println("\nYour Password is Successfully Saved!");
-
-
-            writer.flush();
-            writer.close();
-        } catch (IOException ex) {
-            println("\nAn Error occurred while storing your Password! Sorry");
-        }
-
     }
 }
