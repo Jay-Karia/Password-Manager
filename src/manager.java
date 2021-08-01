@@ -13,11 +13,11 @@ public class manager {
         if (s.equals("1")) {
             println("Selected: 1) Custom Directory");
             Scanner custom = new Scanner(System.in);
-            cDir = custom.nextLine();
+            cDir = custom.nextLine() + "\\";
             System.out.println("You Directory is set to: " + cDir);
         } else if (s.equals("2")) {
             println("\nSelected: 2) Default Directory");
-            cDir = new java.io.File(".").getCanonicalPath();
+            cDir = new java.io.File(".").getCanonicalPath() + "\\";
             System.out.println("Default Directory is set: " + cDir);
         }
 
@@ -45,9 +45,9 @@ public class manager {
                     String newPassword = newPass.nextLine();
 
                     if (Objects.equals(password, newPassword)) {
-                        println("Password is Set!");
+                        println("\nPassword is Set!");
                         println("One last Step to go!\n");
-                        println("\nEnter the Security Key for your Password");
+                        println("Enter the Security Key for your Password");
                         Scanner security = new Scanner(System.in);
                         String key = security.nextLine();
                         /*Setting a Password*/
@@ -75,7 +75,7 @@ public class manager {
             }
             case "2" -> {
                 println("\nSelected: 2) Retrieve Your Password");
-                println("\nEnter the Security Key to retrieve your password");
+                println("\nEnter the Security Key to retrieve your password\n");
                 Scanner sec = new Scanner(System.in);
                 String newSec = sec.nextLine();
                 try {
@@ -99,7 +99,7 @@ public class manager {
                 try {
                     File delFile = new File(cDir + newDel + ".txt");
                     delFile.delete();
-                    println("Your Password is Successfully Deleted!");
+                    println("\nYour Password is Successfully Deleted!");
                 } catch (Exception e) {
                     println("Could not Delete your Password! Sorry");
                 }
