@@ -33,7 +33,7 @@ public class manager {
                     println("Password is Set!");
                     println("\nEnter the Security Key for your Password");
                     Scanner security = new Scanner(System.in);
-                    String key = security.nextLine();
+                    String key = security.nextLine() + ".txt";
                     setPassword(key, n, password, p);
                 } else {
                     println("Your password doesn't match! Try again");
@@ -51,13 +51,14 @@ public class manager {
 
     private static void getPass(String key) {
         try {
-            File f = new File("s");
-            Reader reader = new FileReader(f);
-            System.out.println(reader.read());
+            File f = new File(key + ".txt");
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String str;
+            while ((str = br.readLine()) != null) {
+                System.out.println(str);
+            }
 
-            reader.close();
-
-        } catch (IOException i) {
+        } catch (Exception i) {
             println("Could not get your Password!! Sorry");
         }
     }
